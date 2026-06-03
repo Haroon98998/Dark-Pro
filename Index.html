@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+  DARK PRO WALLPAPERS — Index.html (Home)
+  Code order = visual order (top → bottom on screen)
+================================================================================
+-->
+<html lang="en">
+<head> 
+    <!-- [01] HEAD — Meta, title, Bootstrap, site stylesheet -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Pro Wallpapers - UHD Screen</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!--
+     favicon
+-->
+    <link rel="icon" type="image/png" href="https://i.postimg.cc/5tMy9Tf2/dp.png">
+
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous">
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous">
+    </script>
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+<body>
+
+  
+
+    <!-- [02] ANCHOR — Home scroll target -->
+    <div id="home-section"></div>
+
+
+
+
+    <!-- [03] NAVBAR — Logo, menu, categories, search -->
+    <nav class="navbar navbar-expand-lg navbar-dark" id="navbar" aria-label="Main">
+        <!-- Mobile-only search icon trigger (hidden on desktop) -->
+        <a href="#search-section" class="nav-search-trigger" id="nav-search-link" aria-label="Go to search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="search-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m20.71 19.29l-3.4-3.39A7.92 7.92 0 0 0 19 11a8 8 0 1 0-8 8a7.92 7.92 0 0 0 4.9-1.69l3.39 3.4a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.42M5 11a6 6 0 1 1 6 6a6 6 0 0 1-6-6"/></svg>
+        </a>
+        <a class="navbar-brand" href="#" id="page-name">
+            <img src="https://i.postimg.cc/5tMy9Tf2/dp.png" width="35" height="35" class="brand-icon">
+            <span class="brand-text">Dark Pro</span><span class="brand-tag">Wallpapers</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="menu-btn" viewBox="0 0 24 24" aria-hidden="true"><circle cx="4" cy="12" r="1" fill="currentColor"/><rect width="14" height="2" x="7" y="11" fill="currentColor" rx=".94" ry=".94"/><rect width="18" height="2" x="3" y="16" fill="currentColor" rx=".94" ry=".94"/><rect width="18" height="2" x="3" y="6" fill="currentColor" rx=".94" ry=".94"/></svg>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" id="nav-items">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#" id="home-btn">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item" id="contact-btn-margin">
+                    <a class="nav-link" href="#" id="contact-btn">Features</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <div class="dropdown">
+                        <button type="button" class="dropbtn" id="categories-btn" aria-expanded="false" aria-haspopup="true" aria-controls="dropdownContent" onclick="toggleDropdown()">Categories <span class="drop-caret" aria-hidden="true">▼</span></button>
+                        <div class="dropdown-content" id="dropdownContent" role="menu" data-lenis-prevent>
+                            <a href="Index.html" class="drop-menu" role="menuitem">All wallpapers</a>
+                            <a href="category.html?cat=4k" class="drop-menu" role="menuitem">4K &amp; Ultra HD</a>
+                            <a href="category.html?cat=8k" class="drop-menu" role="menuitem">8K</a>
+                            <a href="category.html?cat=hd" class="drop-menu" role="menuitem">HD (1080p)</a>
+                            <a href="category.html?cat=mobile" class="drop-menu" role="menuitem">Mobile &amp; Phone</a>
+                            <a href="category.html?cat=ultrawide" class="drop-menu" role="menuitem">Dual / Ultrawide</a>
+                            <a href="category.html?cat=nature" class="drop-menu" role="menuitem">Nature &amp; Landscapes</a>
+                            <a href="category.html?cat=abstract" class="drop-menu" role="menuitem">Abstract</a>
+                            <a href="category.html?cat=minimal" class="drop-menu" role="menuitem">Minimal</a>
+                            <a href="category.html?cat=dark" class="drop-menu" role="menuitem">Dark &amp; AMOLED</a>
+                            <a href="category.html?cat=space" class="drop-menu" role="menuitem">Space &amp; Galaxy</a>
+                            <a href="category.html?cat=city" class="drop-menu" role="menuitem">City &amp; Architecture</a>
+                            <a href="category.html?cat=ocean" class="drop-menu" role="menuitem">Ocean &amp; Beaches</a>
+                            <a href="category.html?cat=animals" class="drop-menu" role="menuitem">Animals &amp; Wildlife</a>
+                            <a href="category.html?cat=cars" class="drop-menu" role="menuitem">Cars &amp; Bikes</a>
+                            <a href="category.html?cat=gaming" class="drop-menu" role="menuitem">Gaming</a>
+                            <a href="category.html?cat=anime" class="drop-menu" role="menuitem">Anime &amp; Manga</a>
+                            <a href="category.html?cat=superheroes" class="drop-menu" role="menuitem">Superheroes &amp; Movies</a>
+                            <a href="category.html?cat=fantasy" class="drop-menu" role="menuitem">Fantasy &amp; Digital Art</a>
+                            <a href="category.html?cat=sports" class="drop-menu" role="menuitem">Sports</a>
+                            <a href="category.html?cat=quotes" class="drop-menu" role="menuitem">Quotes &amp; Typography</a>
+                            <a href="category.html?cat=seasons" class="drop-menu" role="menuitem">Seasons</a>
+                            <a href="category.html?cat=flowers" class="drop-menu" role="menuitem">Flowers &amp; Macro</a>
+                            <a href="category.html?cat=black-white" class="drop-menu" role="menuitem">Black &amp; White</a>
+                            <a href="category.html?cat=aesthetic" class="drop-menu" role="menuitem">Aesthetic &amp; Vaporwave</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" id="account-btn-margin">
+                    <a class="nav-link" href="#" id="account-btn">Account</a>
+                </li>
+            </ul>
+            <!-- Desktop search form (hidden on mobile via Bootstrap classes) -->
+            <form class="form-inline my-2 my-lg-0 nav-search-form d-none d-lg-flex" role="search" aria-label="Site search" id="nav-search-form">
+                <div class="email-container">
+                    <input type="search" name="q" placeholder="Search wallpapers…" class="email-input" id="nav-search-input" autocomplete="off" aria-label="Search wallpapers">
+                    <button type="submit" class="send-btn" aria-label="Submit search"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m20.71 19.29l-3.4-3.39A7.92 7.92 0 0 0 19 11a8 8 0 1 0-8 8a7.92 7.92 0 0 0 4.9-1.69l3.39 3.4a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.42M5 11a6 6 0 1 1 6 6a6 6 0 0 1-6-6"/></svg></button>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+
+
+
+    <!-- [04] HERO — Fullscreen scroll wallpapers (Images/Scroll/*.png) -->
+    <div id="hero-scroll-track" class="hero-scroll-track">
+        <div class="section scroll-3d-scene scroll-3d-sequence"
+             data-scroll-images="https://i.postimg.cc/NG9rfFL9/1.png|https://i.postimg.cc/RCyVPTSH/2.png|https://i.postimg.cc/tJwTW3Tp/3.png|https://i.postimg.cc/Zn2Rp8RY/4.png|https://i.postimg.cc/ht9jQ7qP/5.png|https://i.postimg.cc/43s36NJn/6.png">
+            <div class="content">Visual Excellence</div>
+        </div>
+    </div>
+
+
+
+
+    <!-- [05] MAIN CONTENT — Scrolls over hero (gallery, features, search, account) -->
+    <div id="main-content-wrapper" class="site-content-over-hero">
+
+        <!-- [05a] WALLPAPER GALLERY — Cards live in #blog-container (single source for categories) -->
+        <section id="wallpapers-section" class="wallpapers-section">
+            <!-- Search results info bar (hidden by default) -->
+            <div id="search-results-bar" class="search-results-bar" style="display:none;">
+                <span id="search-results-text"></span>
+                <button type="button" id="search-clear-btn" class="search-clear-btn" aria-label="Clear search">✕ Clear</button>
+            </div>
+            <div class="blog-container" id="blog-container">
+                <!-- Wallpaper cards - 15 total for pagination demo (8 per page = 2 pages) -->
+                <div class="blog-card" data-category="gaming cars" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/W4k2Zn1p/6a1d34ead4a003-32105971Processed.jpg">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/W4k2Zn1p/6a1d34ead4a003-32105971Processed.jpg" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Natures - 4K - Landscape</span><span class="wallpaper-sep" aria-hidden="true"> </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="mobile abstract" data-resolution="1080 × 1920" data-original-src="https://i.postimg.cc/9f7W9pFk/6a1d346f01ad36-21098186Processed.jpg">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/9f7W9pFk/6a1d346f01ad36-21098186Processed.jpg" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Food - Art - 4k</span><span class="wallpaper-sep" aria-hidden="true"> </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="gaming cars" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/SRGLcN0y/tiger.png">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/SRGLcN0y/tiger.png" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">White Tiger - Animal - Nature</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="gaming" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/Jz0g7SJR/snow.png">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/Jz0g7SJR/snow.png" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Snowfall & Mountain - Landscape - Natures</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="gaming" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/G2dxtsNx/lamborghini.jpg">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/G2dxtsNx/lamborghini.jpg" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Lamborghini Aventador - Cars - 4k</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="superheroes" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/26MMgG3B/abstract.png">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/26MMgG3B/abstract.png" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Abstract - Dark Wallpaper - 4K</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="nature" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/rFQCmmCs/ocean.png">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/rFQCmmCs/ocean.png" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Ocean - Nature Wallpaper - 4K</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="cars" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/FRdnbSpb/lion.jpg">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/FRdnbSpb/lion.jpg" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Lion - 4K Animal wallpaper</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="abstract space" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/BvthsFrs/minimal.png">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/BvthsFrs/minimal.png" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Minimal - Abstract Wallpaper 4k </span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="gaming superheroes" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/SN0Hrgwc/console.png">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/SN0Hrgwc/console.png" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Gaming console - 8K Wallpaper - White</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="gaming anime" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/CLFsSDDK/windows-wall.png">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/CLFsSDDK/windows-wall.png" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Abstract - Windows Wallpaper 5K - Flowers - Black - fantasy</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="gaming anime" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/L5PwSPZP/eye.png">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/L5PwSPZP/eye.png" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Eye Wallpaper - Fantasy - 4k</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="mobile nature" data-resolution="1080 × 1920" data-original-src="https://i.postimg.cc/tCHmPYxK/flower.png">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/tCHmPYxK/flower.png" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Red Flower - Dark Wallpaper - 4K </span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="cars racing" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/DfQP95Sb/nature2.png">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/DfQP95Sb/nature2.png" alt="Wallpaper="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Lake wallpaper - Nature - 4K</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="nature ocean" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/9fNnqbdR/6a1d3ec3a4f2b8-12065242Processed.png">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/9fNnqbdR/6a1d3ec3a4f2b8-12065242Processed.png" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Fantasy Ocean wallpaper</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="nature ocean" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/C1qmngM2/snow-mountains-5120x2880-25876.jpg">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/C1qmngM2/snow-mountains-5120x2880-25876.jpg" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Desert Night - Sandy, or Rocky Biomes Wallpaper 4k</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="nature ocean" data-resolution="3840 × 2160" data-original-src="/Dark pro/Images/2.jpg">
+                    <div class="image-wrapper" tabindex="0"><img src="/Dark pro/Images/2.jpg" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Ocean Breeze</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="nature ocean" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/SNztGz0X/wp10381456-alan-wake-2-wallpapers.jpg">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/SNztGz0X/wp10381456-alan-wake-2-wallpapers.jpg" alt="Wallpaper" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Ocean Breeze</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="nature ocean" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/SNztGz0X/wp10381456-alan-wake-2-wallpapers.jpg">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/SNztGz0X/wp10381456-alan-wake-2-wallpapers.jpg" alt="Ocean View" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Ocean Breeze</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+                <div class="blog-card" data-category="nature ocean" data-resolution="3840 × 2160" data-original-src="https://i.postimg.cc/SNztGz0X/wp10381456-alan-wake-2-wallpapers.jpg">
+                    <div class="image-wrapper" tabindex="0"><img src="https://i.postimg.cc/SNztGz0X/wp10381456-alan-wake-2-wallpapers.jpg" alt="Ocean View" loading="lazy"><div class="social-panel"><button type="button" class="view-wallpaper-btn">View</button></div></div>
+                    <a href="#" class="wallpaper-card-link"><p class="wallpaper-line"><span class="wallpaper-name">Ocean Breeze</span><span class="wallpaper-sep" aria-hidden="true">  </span><span class="wallpaper-kind"></span></p></a>
+                </div>
+           
+            </div>
+            <!-- No search results message (hidden by default) -->
+            <div id="search-no-results" class="search-no-results" style="display:none;">
+                <p>No wallpapers found matching your search.</p>
+                <p class="search-no-results-hint">Try different keywords or browse categories.</p>
+            </div>
+            <nav class="wallpaper-pagination reveal-card" id="wallpaper-pagination" aria-label="Wallpaper pages"></nav>
+        </section>
+
+
+
+
+        <!-- [05b] LATEST WALLPAPERS — Portrait cards, auto-scroll + drag -->
+        <section class="h-scroll-section h-scroll-section--portrait reveal-card" id="latest-scroll-section" aria-label="Latest wallpapers">
+            <div class="h-scroll-scroll-room">
+            <div class="h-scroll-pin">
+                <h2 class="h-scroll-heading">Latest wallpapers</h2>
+                <p class="h-scroll-sub">Portrait picks · auto scroll · drag to browse</p>
+                <div class="h-scroll-viewport" data-lenis-prevent>
+                    <div class="h-scroll-strip" id="latest-scroll-strip">
+                        <a href="#" class="h-scroll-card h-scroll-card--portrait" data-original-src="https://i.postimg.cc/9f7W9pFk/6a1d346f01ad36-21098186Processed.jpg" data-resolution="1080 × 1920" data-category="mobile abstract">
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/9f7W9pFk/6a1d346f01ad36-21098186Processed.jpg" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Foot Portrait Wallpaper</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--portrait" data-original-src="https://i.postimg.cc/W4k2Zn1p/6a1d34ead4a003-32105971Processed.jpg" data-resolution="1080 × 1920" data-category="mobile nature">
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/W4k2Zn1p/6a1d34ead4a003-32105971Processed.jpg" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Nature Lake day Light Wallpaper</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--portrait" data-original-src="https://i.postimg.cc/tCHmPYxK/flower.png" data-resolution="3840 × 2160" data-category="gaming cars">
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/tCHmPYxK/flower.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Red Flower Potrait Mobile wallpaper</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--portrait" data-original-src="https://i.postimg.cc/L6dGTxrD/lamborghini.jpg" data-resolution="3840 × 2160" data-category="gaming">
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/L6dGTxrD/lamborghini.jpg" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Lamborghini Portrait 4k</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--portrait" data-original-src="https://i.postimg.cc/CLFsSDDK/windows-wall.png" data-resolution="3840 × 2160" data-category="gaming">
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/CLFsSDDK/windows-wall.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Digital Art, Wallpaper 4k</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--portrait" data-original-src="https://i.postimg.cc/Jz0g7SJR/snow.png" data-resolution="3840 × 2160" data-category="superheroes">
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/Jz0g7SJR/snow.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Snowfall Portrait</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--portrait" data-original-src="https://i.postimg.cc/rFQCmmCs/ocean.png" data-resolution="3840 × 2160" data-category="gaming cars">
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/rFQCmmCs/ocean.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Nature Mountain</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--portrait" data-original-src="/https://i.postimg.cc/26MMgG3B/abstract.png" data-resolution="3840 × 2160" data-category="gaming anime">
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/26MMgG3B/abstract.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Abstract Portrait 4k</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--portrait" data-original-src="https://i.postimg.cc/SN0Hrgwc/console.png" data-resolution="3840 × 2160" data-category="abstract space">
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/SN0Hrgwc/console.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Gaming Console</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--portrait" data-original-src="https://i.postimg.cc/BvthsFrs/minimal.png" data-resolution="3840 × 2160" data-category="gaming superheroes">
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/BvthsFrs/minimal.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Minimal Portrait 4K</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--portrait" data-original-src="https://i.postimg.cc/L5PwSPZP/eye.png" data-resolution="3840 × 2160" data-category="cars">
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/L5PwSPZP/eye.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Close Eye Portrait</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+
+
+
+        <!-- [05c] PREMIUM WALLPAPERS — Landscape cards, auto-scroll + drag -->
+        <section class="h-scroll-section h-scroll-section--landscape h-scroll-section--premium reveal-card" id="premium-scroll-section" aria-label="Premium wallpapers">
+            <div class="h-scroll-scroll-room">
+            <div class="h-scroll-pin">
+                <h2 class="h-scroll-heading">Premium wallpapers</h2>
+                <p class="h-scroll-sub">Exclusive landscape collection · drag to explore</p>
+                <div class="h-scroll-viewport" data-lenis-prevent>
+                    <div class="h-scroll-strip" id="premium-scroll-strip">
+                        <a href="#" class="h-scroll-card h-scroll-card--landscape h-scroll-card--premium" data-premium="true" data-original-src="https://i.postimg.cc/9fNnqbdR/6a1d3ec3a4f2b8-12065242Processed.png" data-resolution="3840 × 2160" data-category="gaming cars">
+                            <span class="h-scroll-card__badge">Premium</span>
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/9fNnqbdR/6a1d3ec3a4f2b8-12065242Processed.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Fantasy Rock wallpaper 8k</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--landscape h-scroll-card--premium" data-premium="true" data-original-src="https://i.postimg.cc/9f7W9pFk/6a1d346f01ad36-21098186Processed.jpg" data-resolution="3840 × 2160" data-category="cars">
+                            <span class="h-scroll-card__badge">Premium</span>
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/9f7W9pFk/6a1d346f01ad36-21098186Processed.jpg" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Food 8k Wallpaper</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--landscape h-scroll-card--premium" data-premium="true" data-original-src="https://i.postimg.cc/W4k2Zn1p/6a1d34ead4a003-32105971Processed.jpg" data-resolution="3840 × 2160" data-category="gaming cars">
+                            <span class="h-scroll-card__badge">Premium</span>
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/W4k2Zn1p/6a1d34ead4a003-32105971Processed.jpg" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">8k Natural Day Wallpaper</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--landscape h-scroll-card--premium" data-premium="true" data-original-src="https://i.postimg.cc/9f7W9pFk/6a1d346f01ad36-21098186Processed.jpg.jpg" data-resolution="3840 × 2160" data-category="abstract space">
+                            <span class="h-scroll-card__badge">Premium</span>
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/9f7W9pFk/6a1d346f01ad36-21098186Processed.jpg" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">8k Cooking</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--landscape h-scroll-card--premium" data-premium="true" data-original-src="https://i.postimg.cc/C1qmngM2/snow-mountains-5120x2880-25876.jpg" data-resolution="3840 × 2160" data-category="gaming superheroes">
+                            <span class="h-scroll-card__badge">Premium</span>
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/C1qmngM2/snow-mountains-5120x2880-25876.jpg" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Desert Night 8K Wallpaper</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--landscape h-scroll-card--premium" data-premium="true" data-original-src="https://i.postimg.cc/SRGLcN0y/tiger.png" data-resolution="3840 × 2160" data-category="gaming">
+                            <span class="h-scroll-card__badge">Premium</span>
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/SRGLcN0y/tiger.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">White Tiger n Snow Mountain 8k Wallpaper</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--landscape h-scroll-card--premium" data-premium="true" data-original-src="https://i.postimg.cc/CLFsSDDK/windows-wall.png" data-resolution="3840 × 2160" data-category="gaming anime">
+                            <span class="h-scroll-card__badge">Premium</span>
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/CLFsSDDK/windows-wall.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Windows 11 8k Wallpaper</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--landscape h-scroll-card--premium" data-premium="true" data-original-src="https://i.postimg.cc/rFQCmmCs/ocean.png" data-resolution="3840 × 2160" data-category="nature">
+                            <span class="h-scroll-card__badge">Premium</span>
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/rFQCmmCs/ocean.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Ocean Depths 8K Wallpaper</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--landscape h-scroll-card--premium" data-premium="true" data-original-src="https://i.postimg.cc/SN0Hrgwc/console.png" data-resolution="3840 × 2160" data-category="nature ocean">
+                            <span class="h-scroll-card__badge">Premium</span>
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/SN0Hrgwc/console.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Console 8K Wallpaper</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--landscape h-scroll-card--premium" data-premium="true" data-original-src="https://i.postimg.cc/DfQP95Sb/nature2.png" data-resolution="3840 × 2160" data-category="nature ocean">
+                            <span class="h-scroll-card__badge">Premium</span>
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/DfQP95Sb/nature2.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Nature 8K Wallpaper</span>
+                        </a>
+                        <a href="#" class="h-scroll-card h-scroll-card--landscape h-scroll-card--premium" data-premium="true" data-original-src="https://i.postimg.cc/tCHmPYxK/flower.png" data-resolution="3840 × 2160" data-category="superheroes">
+                            <span class="h-scroll-card__badge">Premium</span>
+                            <div class="h-scroll-card__img"><img src="https://i.postimg.cc/tCHmPYxK/flower.png" alt="Wallpaper" loading="lazy"></div>
+                            <span class="h-scroll-card__label">Flower 8K Wallpaper</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            </div>
+        </section>
+
+
+
+
+        <!-- [05d] SEARCH — Quick filters + search box -->
+        <div id="search-section"></div>
+        <center>
+            <p class="reveal-card search-title">Search wallpapers</p>
+            <input type="search" class="reveal-card search-box" id="search-box" placeholder="Search wallpapers…" aria-label="Search wallpapers"><br>
+            <button type="button" class="reveal-card search-options search-quick-btn" data-search="4k ultra hd">4K &amp; Ultra HD</button>
+            <button type="button" class="reveal-card search-options search-quick-btn" data-search="nature">Nature</button>
+            <button type="button" class="reveal-card search-options search-quick-btn" data-search="gaming">Gaming</button><br>
+            <button type="button" class="reveal-card search-options search-quick-btn" data-search="anime">Anime</button>
+            <button type="button" class="reveal-card search-options search-quick-btn" data-search="dark amoled">Dark / AMOLED</button>
+            <button type="button" class="reveal-card search-options search-quick-btn" data-search="abstract">Abstract</button>
+            <button type="button" class="reveal-card search-options search-quick-btn" data-search="cars">Cars</button>
+        </center>
+
+
+
+
+        <!-- [05e] ACCOUNT — Login & register forms -->
+        <div class="account-wrapper" id="account-section">
+            <center>
+                <p class="reveal-card section-title">Account</p>
+                <div class="account-slider-container">
+                    <div class="account-slide account-slide--login active" id="login-slide">
+                        <div class="account-card">
+                            <p class="login">Login</p>
+                            <input type="text" placeholder="Username or Email" class="account-input">
+                            <input type="password" class="account-input" placeholder="Password">
+                            <div class="account-card-actions">
+                                <a href="#" class="forget-link">Forget Password</a>
+                                <button class="account-btn login-submit-btn">Login</button>
+                            </div>
+                            <p class="account-info">Don't have an account? <span class="register-link" id="register">Register</span></p>
+                            <button class="google-btn"><svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 48 48"><path fill="#ffc107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8c-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C12.955 4 4 12.955 4 24s8.955 20 20 20s20-8.955 20-20c0-1.341-.138-2.65-.389-3.917"/><path fill="#ff3d00" d="m6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4C16.318 4 9.656 8.337 6.306 14.691"/><path fill="#4caf50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.9 11.9 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44"/><path fill="#1976d2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002l6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917"/></svg><span>Continue With Google</span></button>
+                        </div>
+                    </div>
+                    <div class="account-slide account-slide--register" id="register-slide">
+                        <div class="account-card">
+                            <p class="login">Register</p>
+                            <input type="text" placeholder="Username" class="account-input">
+                            <input type="text" placeholder="Email" class="account-input">
+                            <input type="password" class="account-input" placeholder="Password">
+                            <input type="password" class="account-input" placeholder="Confirm Password">
+                            <div class="account-card-actions register-actions">
+                                <button class="account-btn back-to-login-btn" id="back-to-login-btn">Back to Login</button>
+                                <button class="account-btn register-submit-btn">Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </center>
+        </div>
+    </div>
+
+
+
+
+    <!-- [06] WALLPAPER DETAIL — Full view overlay (hidden until View click) -->
+    <div id="wallpaper-detail-section" class="wallpaper-detail-section site-content-over-hero" style="display:none;" aria-hidden="true" data-lenis-prevent>
+        <div class="wallpaper-detail-container">
+            <button type="button" class="back-to-gallery-btn" id="back-to-gallery-btn" aria-label="Back to gallery">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+                Back to Gallery
+            </button>
+            <div class="wallpaper-detail-image-wrap" id="detail-image-wrap">
+                <img id="detail-wallpaper-img" src="" alt="" loading="eager">
+            </div>
+            <div class="wallpaper-detail-info">
+                <h1 id="detail-wallpaper-name" class="detail-title"></h1>
+                <p id="detail-smart-tags" class="detail-smart-tags" hidden></p>
+                <div class="detail-meta">
+                    <span class="detail-meta-item"><strong>Resolution:</strong> <span id="detail-resolution">—</span></span>
+                    <span class="detail-meta-item"><strong>Categories:</strong> <span id="detail-categories">—</span></span>
+                    <span class="detail-meta-item"><strong>Type:</strong> <span id="detail-type">Wallpaper</span></span>
+                    <span class="detail-meta-item" id="detail-views-item"><strong>👁 Views:</strong> <span id="detail-views">0</span></span>
+                </div>
+                <div class="detail-download-btns">
+                    <button type="button" id="detail-download-original" class="detail-download-btn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                        Download Original Resolution
+                    </button>
+                    <button type="button" id="detail-download-screen" class="detail-download-btn detail-download-btn--screen">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                        Download Screen Resolution
+                    </button>
+                </div>
+            </div>
+            <div class="related-wallpapers-section" id="related-wallpapers-section">
+                <h2 class="related-heading">Related Wallpapers</h2>
+                <div class="related-wallpapers-grid" id="related-wallpapers-grid"></div>
+                <p class="related-empty" id="related-empty" style="display:none;">No related wallpapers found.</p>
+            </div>
+        </div>
+    </div>
+
+
+
+
+    <!-- [06b] PREMIUM LOGIN PROMPT -->
+    <div id="premium-login-modal" class="premium-login-modal" hidden aria-hidden="true">
+        <div class="premium-login-modal__backdrop" data-premium-login-close></div>
+        <div class="premium-login-modal__panel" role="dialog" aria-labelledby="premium-login-title" aria-modal="true">
+            <h2 id="premium-login-title" class="premium-login-modal__title">Premium wallpaper</h2>
+            <p class="premium-login-modal__text">Login to Download</p>
+            <div class="premium-login-modal__actions">
+                <button type="button" class="premium-login-modal__btn premium-login-modal__btn--primary" id="premium-login-go-btn">Login</button>
+                <button type="button" class="premium-login-modal__btn premium-login-modal__btn--ghost" data-premium-login-close>Cancel</button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- [07] BACK TO TOP — Fixed button -->
+    <button id="topBtn" title="Go to top"><svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 100 100"><path fill="currentColor" d="M78.016 49.132L51.961 12.714a2.52 2.52 0 0 0-2.043-1.051h-.006a2.52 2.52 0 0 0-2.048 1.059L21.977 49.14a2.51 2.51 0 0 0-.183 2.612a2.51 2.51 0 0 0 2.236 1.361h12.183l-.001 32.709a2.514 2.514 0 0 0 2.516 2.515l22.541-.001a2.515 2.515 0 0 0 2.516-2.517V53.114h12.187c.94 0 1.803-.53 2.237-1.367a2.51 2.51 0 0 0-.193-2.615"/></svg></button>
+
+
+
+
+    <!-- [08] FOOTER — About, links, contact -->
+    <footer class="footer site-content-over-hero" id="main-footer">
+        <a class="navbar-brand" href="#" id="page-name-footer"><svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg><span class="brand-text">Dark Pro</span><span class="brand-tag">Wallpapers</span></a>
+        <div class="footer-container">
+            <div class="footer-column"><h3>About Us</h3><p>Free HD, 4K, and 8K wallpapers for desktop and mobile. New art added regularly.</p></div>
+            <div class="footer-column"><h3>Quick Links</h3><ul><li><a href="#">Home</a></li><li><a href="#">Gallery</a></li><li><a href="#">Account</a></li><li><a href="#">Contact</a></li></ul></div>
+            <div class="footer-column"><div id="Contact-section"><h3>Contact</h3><p>Email: support@example.com</p><p>Phone: +123-456-7890</p></div><div class="social-icons"><a href="#"><i class="fab fa-facebook-f"></i></a><a href="#"><i class="fab fa-twitter"></i></a><a href="#"><i class="fab fa-instagram"></i></a><a href="#"><i class="fab fa-linkedin-in"></i></a></div></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2025 YourCompany. All rights reserved. <b>Creator Name:  Haroon</b></p></div>
+    </footer>
+
+
+
+
+    <!-- [09] SCRIPTS — Load order matters (categories → catalog → GSAP → main) -->
+    <script src="Javascript/wallpaper-categories.js"></script>
+    <script src="Javascript/wallpapers-catalog.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="Javascript/smooth-scroll.js"></script>
+    <script src="Javascript/scroll-3d.js"></script>
+    <script src="Javascript/scroll-horizontal.js"></script>
+    <script src="Javascript/Script.js"></script>
+    </body>
+</html>

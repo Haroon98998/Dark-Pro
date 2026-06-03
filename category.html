@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<!--
+================================================================================
+  DARK PRO WALLPAPERS — category.html
+  Same layout as Index: hero scroll + gallery overlay
+  Wallpapers load from Index.html #blog-container (no duplicate cards)
+================================================================================
+-->
+<html lang="en">
+<head>
+    <!-- [01] HEAD -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Pro — Category Wallpapers</title>
+    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body>
+
+    <!-- [02] ANCHOR -->
+    <div id="home-section"></div>
+
+
+
+
+    <!-- [03] NAVBAR -->
+    <nav class="navbar navbar-expand-lg navbar-dark" id="navbar" aria-label="Main">
+        <a href="Index.html#search-section" class="nav-search-trigger" id="nav-search-link" aria-label="Go to search">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="search-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m20.71 19.29l-3.4-3.39A7.92 7.92 0 0 0 19 11a8 8 0 1 0-8 8a7.92 7.92 0 0 0 4.9-1.69l3.39 3.4a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.42M5 11a6 6 0 1 1 6 6a6 6 0 0 1-6-6"/></svg>
+        </a>
+        <a class="navbar-brand" href="Index.html" id="page-name">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+            <span class="brand-text">Dark Pro</span><span class="brand-tag">Wallpapers</span>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" id="menu-btn" viewBox="0 0 24 24" aria-hidden="true"><circle cx="4" cy="12" r="1" fill="currentColor"/><rect width="14" height="2" x="7" y="11" fill="currentColor" rx=".94" ry=".94"/><rect width="18" height="2" x="3" y="16" fill="currentColor" rx=".94" ry=".94"/><rect width="18" height="2" x="3" y="6" fill="currentColor" rx=".94" ry=".94"/></svg>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto" id="nav-items">
+                <li class="nav-item"><a class="nav-link" href="Index.html" id="home-btn">Home</a></li>
+                <li class="nav-item" id="contact-btn-margin"><a class="nav-link" href="Index.html#Contact-section" id="contact-btn">Features</a></li>
+                <li class="nav-item dropdown">
+                    <div class="dropdown">
+                        <button type="button" class="dropbtn" id="categories-btn" aria-expanded="false" aria-haspopup="true" aria-controls="dropdownContent" onclick="toggleDropdown()">Categories <span class="drop-caret" aria-hidden="true">▼</span></button>
+                        <div class="dropdown-content" id="dropdownContent" role="menu" data-lenis-prevent>
+                            <a href="Index.html" class="drop-menu" role="menuitem">All wallpapers</a>
+                            <a href="category.html?cat=4k" class="drop-menu" role="menuitem">4K &amp; Ultra HD</a>
+                            <a href="category.html?cat=8k" class="drop-menu" role="menuitem">8K</a>
+                            <a href="category.html?cat=hd" class="drop-menu" role="menuitem">HD (1080p)</a>
+                            <a href="category.html?cat=mobile" class="drop-menu" role="menuitem">Mobile &amp; Phone</a>
+                            <a href="category.html?cat=ultrawide" class="drop-menu" role="menuitem">Dual / Ultrawide</a>
+                            <a href="category.html?cat=nature" class="drop-menu" role="menuitem">Nature &amp; Landscapes</a>
+                            <a href="category.html?cat=abstract" class="drop-menu" role="menuitem">Abstract</a>
+                            <a href="category.html?cat=minimal" class="drop-menu" role="menuitem">Minimal</a>
+                            <a href="category.html?cat=dark" class="drop-menu" role="menuitem">Dark &amp; AMOLED</a>
+                            <a href="category.html?cat=space" class="drop-menu" role="menuitem">Space &amp; Galaxy</a>
+                            <a href="category.html?cat=city" class="drop-menu" role="menuitem">City &amp; Architecture</a>
+                            <a href="category.html?cat=ocean" class="drop-menu" role="menuitem">Ocean &amp; Beaches</a>
+                            <a href="category.html?cat=animals" class="drop-menu" role="menuitem">Animals &amp; Wildlife</a>
+                            <a href="category.html?cat=cars" class="drop-menu" role="menuitem">Cars &amp; Bikes</a>
+                            <a href="category.html?cat=gaming" class="drop-menu" role="menuitem">Gaming</a>
+                            <a href="category.html?cat=anime" class="drop-menu" role="menuitem">Anime &amp; Manga</a>
+                            <a href="category.html?cat=superheroes" class="drop-menu" role="menuitem">Superheroes &amp; Movies</a>
+                            <a href="category.html?cat=fantasy" class="drop-menu" role="menuitem">Fantasy &amp; Digital Art</a>
+                            <a href="category.html?cat=sports" class="drop-menu" role="menuitem">Sports</a>
+                            <a href="category.html?cat=quotes" class="drop-menu" role="menuitem">Quotes &amp; Typography</a>
+                            <a href="category.html?cat=seasons" class="drop-menu" role="menuitem">Seasons</a>
+                            <a href="category.html?cat=flowers" class="drop-menu" role="menuitem">Flowers &amp; Macro</a>
+                            <a href="category.html?cat=black-white" class="drop-menu" role="menuitem">Black &amp; White</a>
+                            <a href="category.html?cat=aesthetic" class="drop-menu" role="menuitem">Aesthetic &amp; Vaporwave</a>
+                        </div>
+                    </div>
+                </li>
+                <li class="nav-item" id="account-btn-margin"><a class="nav-link" href="Index.html#account-section" id="account-btn">Account</a></li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0 nav-search-form d-none d-lg-flex" role="search" aria-label="Site search">
+                <div class="email-container">
+                    <input type="search" name="q" placeholder="Search wallpapers…" class="email-input" autocomplete="off" aria-label="Search wallpapers">
+                    <button type="submit" class="send-btn" aria-label="Submit search"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="m20.71 19.29l-3.4-3.39A7.92 7.92 0 0 0 19 11a8 8 0 1 0-8 8a7.92 7.92 0 0 0 4.9-1.69l3.39 3.4a1 1 0 0 0 1.42 0a1 1 0 0 0 0-1.42M5 11a6 6 0 1 1 6 6a6 6 0 0 1-6-6"/></svg></button>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+
+
+
+    <!-- [04] HERO — Same scroll as Index (scroll-3d.js) -->
+    <div id="hero-scroll-track" class="hero-scroll-track">
+        <div class="section scroll-3d-scene scroll-3d-sequence"
+             data-scroll-images="Images/Scroll/1.png|Images/Scroll/2.png|Images/Scroll/3.png|Images/Scroll/4.png">
+            <div class="content" id="category-hero-title">Wallpapers</div>
+        </div>
+    </div>
+
+
+
+
+    <!-- [05] GALLERY — Filled by wallpapers-catalog.js from Index.html -->
+    <div id="main-content-wrapper" class="site-content-over-hero">
+        <section id="wallpapers-section" class="wallpapers-section">
+            <div class="blog-container" id="blog-container"></div>
+        </section>
+        <nav class="wallpaper-pagination reveal-card" id="wallpaper-pagination" aria-label="Wallpaper pages"></nav>
+    </div>
+
+    <footer class="footer site-content-over-hero" id="main-footer">
+        <a class="navbar-brand" href="Index.html" id="page-name-footer">
+            <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" class="brand-icon" viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/></svg>
+            <span class="brand-text">Dark Pro</span><span class="brand-tag">Wallpapers</span>
+        </a>
+        <div class="footer-container">
+            <div class="footer-column"><h3>About Us</h3><p>Free HD, 4K, and 8K wallpapers for desktop and mobile.</p></div>
+            <div class="footer-column"><h3>Quick Links</h3><ul><li><a href="Index.html">Home</a></li><li><a href="Index.html#wallpapers-section">Gallery</a></li></ul></div>
+        </div>
+        <div class="footer-bottom"><p>&copy; 2025 YourCompany. All rights reserved.</p></div>
+    </footer>
+
+
+
+
+    <!-- [06] BACK TO TOP -->
+    <button id="topBtn" title="Go to top">↑</button>
+
+
+
+
+    <!-- [08] SCRIPTS — Same stack as Index.html -->
+    <script src="Javascript/wallpaper-categories.js"></script>
+    <script src="Javascript/wallpapers-catalog.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/lenis@1.1.18/dist/lenis.min.js"></script>
+    <script src="Javascript/smooth-scroll.js"></script>
+    <script src="Javascript/scroll-3d.js"></script>
+    <script src="Javascript/scroll-horizontal.js"></script>
+    <script src="Javascript/Script.js"></script>
+</body>
+</html>
