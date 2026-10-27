@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+<meta name="theme-color" content="#0a0a0a" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<title>Ultra HDR Camera</title>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--surface:#141414;--surface-2:#1e1e1e;--border:#2a2a2a;
+  --text:#f5f5f5;--text-dim:#9a9a9a;--gold:#d4af37;--blue:#00b4ff;--danger:#ff4d4d;
+  --radius:14px;--radius-sm:10px;
+  --safe-bottom:env(safe-area-inset-bottom,0px);
+  --safe-top:env(safe-area-inset-top,0px);
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased;touch-action:manipulation}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer;-webkit-tap-highlight-color:transparent}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.hidden{display:none!important}
+
+.screen{position:fixed;inset:0;display:none;flex-direction:column;background:var(--bg);z-index:1}
+.screen.active{display:flex}
+
+/* HOME */
+.home-content{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;padding:24px;text-align:center}
+.brand{font-size:clamp(2rem,8vw,3rem);font-weight:800;letter-spacing:.22em;color:var(--gold);text-transform:uppercase}
+.brand-sub{font-size:clamp(.9rem,3vw,1.2rem);letter-spacing:.6em;color:var(--text-dim);margin-top:-12px}
+.camera-launch-btn{width:140px;height:140px;border-radius:50%;display:grid;place-items:center;
+  background:radial-gradient(circle at 30% 30%,#2a2a2a,#0f0f0f);border:1px solid var(--border);
+  color:var(--gold);transition:transform .25s ease,box-shadow .25s ease;
+  box-shadow:0 0 0 1px rgba(212,175,55,.15),0 12px 40px rgba(0,0,0,.6)}
+.camera-launch-btn:active{transform:scale(.94)}
+.home-hint{color:var(--text-dim);font-size:.9rem;letter-spacing:.04em}
+.home-note{color:var(--text-dim);font-size:.72rem;max-width:340px;line-height:1.5;margin-top:12px;opacity:.8}
+
+/* CAMERA SCREEN */
+.viewfinder-container{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:#000;z-index:0;overflow:hidden}
+.viewfinder{position:relative;overflow:hidden;background:#000;max-width:100%;max-height:100%}
+.viewfinder[data-aspect="native"]{width:100%;height:100%}
+.viewfinder[data-aspect="3:4"]{aspect-ratio:3/4;height:100%}
+.viewfinder[data-aspect="4:3"]{aspect-ratio:4/3;width:100%}
+.viewfinder[data-aspect="16:9"]{aspect-ratio:16/9;width:100%}
+.viewfinder[data-aspect="1:1"]{aspect-ratio:1/1;height:100%}
+#camera-preview{width:100%;height:100%;object-fit:cover;background:#000;
+  transform-origin:center center;transition:transform .08s linear;will-change:transform}
+
+.grid-overlay{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background-image:
+    linear-gradient(to right,rgba(255,255,255,.18) 1px,transparent 1px),
+    linear-gradient(to bottom,rgba(255,255,255,.18) 1px,transparent 1px);
+  background-size:33.33% 33.33%;background-position:-1px -1px}
+
+.camera-top-bar{position:absolute;top:0;left:0;right:0;z-index:5;display:flex;align-items:center;
+  justify-content:space-between;padding:calc(12px + var(--safe-top)) 14px 12px;
+  background:linear-gradient(to bottom,rgba(0,0,0,.65),transparent)}
+
+.icon-btn{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+  background:rgba(20,20,20,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.12);font-size:1.1rem;color:var(--text);transition:background .2s}
+.icon-btn:active{background:rgba(40,40,40,.8)}
+.icon-btn.round{font-size:1.4rem}
+
+.camera-info{display:flex;align-items:center;gap:8px;font-size:.72rem;color:var(--text-dim);
+  background:rgba(10,10,10,.5);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+  padding:6px 12px;border-radius:999px;border:1px solid rgba(255,255,255,.08);max-width:60vw}
+#resolution-indicator{font-variant-numeric:tabular-nums;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.badge{font-size:.6rem;font-weight:700;letter-spacing:.08em;padding:2px 6px;border-radius:4px;text-transform:uppercase;white-space:nowrap}
+#hdr-badge{background:linear-gradient(135deg,var(--gold),#f0d060);color:#000}
+#max-badge{background:var(--blue);color:#000}
+
+.zoom-bar{position:absolute;top:80px;left:50%;transform:translateX(-50%);z-index:5;
+  display:flex;flex-direction:column;gap:6px;padding:8px 12px;border-radius:18px;
+  background:rgba(10,10,10,.6);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border:1px solid rgba(255,255,255,.1);width:min(340px,90vw)}
+.zoom-slider-row{display:flex;align-items:center;gap:8px}
+.zoom-btn{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.1);
+  font-size:1.1rem;display:grid;place-items:center;flex-shrink:0}
+#zoom-slider{flex:1;accent-color:var(--gold);height:4px}
+.zoom-label{font-size:.72rem;color:var(--gold);min-width:44px;text-align:right;
+  font-variant-numeric:tabular-nums;font-weight:600}
+.zoom-presets{display:flex;justify-content:space-between;gap:4px}
+.zoom-preset{padding:4px 8px;border-radius:999px;background:rgba(255,255,255,.06);
+  font-size:.68rem;color:var(--text-dim);font-variant-numeric:tabular-nums;min-width:38px;transition:all .15s}
+.zoom-preset.active{background:var(--gold);color:#000;font-weight:700}
+.zoom-preset:active{transform:scale(.92)}
+
+.quick-toggles{position:absolute;bottom:calc(150px + var(--safe-bottom));left:0;right:0;z-index:5;
+  display:flex;justify-content:center;gap:5px;padding:0 8px;flex-wrap:wrap}
+.toggle-btn{display:flex;flex-direction:column;align-items:center;gap:2px;padding:7px 9px;
+  border-radius:var(--radius-sm);background:rgba(20,20,20,.55);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid rgba(255,255,255,.1);min-width:56px;transition:border-color .2s,background .2s}
+.toggle-btn.active{border-color:var(--gold);background:rgba(212,175,55,.15)}
+.toggle-btn:disabled{opacity:.35;pointer-events:none}
+.toggle-icon{font-size:1rem;line-height:1}
+.toggle-label{font-size:.56rem;letter-spacing:.03em;color:var(--text-dim);
+  text-transform:uppercase;white-space:nowrap;font-weight:600}
+.toggle-btn.active .toggle-label{color:var(--gold)}
+
+.bottom-controls{position:absolute;bottom:0;left:0;right:0;z-index:5;display:grid;
+  grid-template-columns:1fr auto 1fr;align-items:center;
+  padding:14px 24px calc(22px + var(--safe-bottom));
+  background:linear-gradient(to top,rgba(0,0,0,.75),transparent)}
+.control-slot{display:flex;align-items:center}
+.control-slot.left{justify-content:flex-start}
+.control-slot.center{justify-content:center}
+.control-slot.right{justify-content:flex-end}
+
+.gallery-btn{width:52px;height:52px;border-radius:var(--radius-sm);overflow:hidden;
+  border:2px solid rgba(255,255,255,.2);background:var(--surface-2);
+  display:grid;place-items:center;color:var(--text-dim);font-size:1.2rem}
+.gallery-btn img{width:100%;height:100%;object-fit:cover;display:none}
+.gallery-btn img[src]{display:block}
+
+.shutter-btn{width:82px;height:82px;border-radius:50%;border:3px solid rgba(255,255,255,.85);
+  display:grid;place-items:center;transition:transform .1s ease;background:transparent}
+.shutter-btn:active{transform:scale(.92)}
+.shutter-inner{width:66px;height:66px;border-radius:50%;background:#fff;transition:background .2s,transform .1s}
+.shutter-btn:active .shutter-inner{background:var(--gold);transform:scale(.9)}
+
+.countdown-overlay{position:absolute;inset:0;z-index:10;display:grid;place-items:center;
+  background:rgba(0,0,0,.45);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+#countdown-number{font-size:8rem;font-weight:800;color:var(--gold);
+  text-shadow:0 0 40px rgba(212,175,55,.5);animation:pulse 1s ease-in-out infinite}
+@keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.12);opacity:.8}}
+
+.loading-overlay{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:16px;background:rgba(0,0,0,.6);
+  backdrop-filter:blur(4px);-webkit-backdrop-filter:blur(4px);color:var(--text);
+  font-size:.9rem;letter-spacing:.06em}
+.spinner{width:44px;height:44px;border-radius:50%;border:3px solid rgba(255,255,255,.15);
+  border-top-color:var(--gold);animation:spin .8s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* PREVIEW */
+.preview-header{display:flex;align-items:center;justify-content:space-between;
+  padding:calc(12px + var(--safe-top)) 16px 12px;border-bottom:1px solid var(--border)}
+.preview-header h2{font-size:1rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim)}
+.text-btn{color:var(--gold);font-size:.9rem;font-weight:600;padding:6px 4px}
+.preview-image-container{flex:1;display:grid;place-items:center;overflow:hidden;background:#000;padding:12px}
+#captured-image{max-width:100%;max-height:100%;object-fit:contain;border-radius:var(--radius-sm);
+  box-shadow:0 8px 40px rgba(0,0,0,.6)}
+.preview-info{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;padding:14px 16px;
+  font-size:.76rem;color:var(--text-dim);border-top:1px solid var(--border);font-variant-numeric:tabular-nums}
+.preview-info div{display:flex;align-items:center;gap:4px}
+.preview-info .warn{color:var(--gold)}
+.preview-actions{padding:12px 16px calc(20px + var(--safe-bottom));border-top:1px solid var(--border)}
+.download-btn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;
+  padding:16px;border-radius:var(--radius);background:linear-gradient(135deg,var(--gold),#b8962e);
+  color:#000;font-weight:800;font-size:.82rem;letter-spacing:.08em;transition:filter .2s,transform .1s}
+.download-btn:active{transform:scale(.98);filter:brightness(.92)}
+
+/* SETTINGS */
+.settings-drawer{position:fixed;top:0;right:0;bottom:0;width:min(340px,88vw);z-index:20;
+  background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;
+  box-shadow:-12px 0 40px rgba(0,0,0,.5);animation:slideIn .25s ease}
+@keyframes slideIn{from{transform:translateX(100%)}to{transform:translateX(0)}}
+.settings-header{display:flex;align-items:center;justify-content:space-between;
+  padding:calc(16px + var(--safe-top)) 16px 16px;border-bottom:1px solid var(--border)}
+.settings-header h3{font-size:.9rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-dim)}
+.settings-body{padding:16px;display:flex;flex-direction:column;gap:4px;overflow-y:auto}
+.settings-row{display:flex;align-items:center;justify-content:space-between;
+  padding:14px 0;border-bottom:1px solid var(--border);font-size:.9rem;gap:12px}
+.settings-row span{flex:1}
+.settings-row select{background:var(--surface-2);color:var(--text);border:1px solid var(--border);
+  border-radius:8px;padding:8px 10px;font-size:.85rem;max-width:60%}
+.checkbox-row input[type="checkbox"]{width:22px;height:22px;accent-color:var(--gold)}
+.settings-note{margin-top:16px;font-size:.72rem;line-height:1.5;color:var(--text-dim);
+  padding:12px;background:var(--surface-2);border-radius:var(--radius-sm);border-left:3px solid var(--gold)}
+
+/* TOAST */
+.toast{position:fixed;bottom:calc(24px + var(--safe-bottom));left:50%;transform:translateX(-50%) translateY(20px);
+  z-index:30;max-width:min(90vw,420px);padding:12px 20px;border-radius:999px;
+  background:rgba(30,30,30,.95);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border:1px solid var(--border);font-size:.8rem;line-height:1.4;text-align:center;color:var(--text);
+  opacity:0;pointer-events:none;transition:opacity .25s,transform .25s}
+.toast.visible{opacity:1;transform:translateX(-50%) translateY(0);pointer-events:auto}
+
+@media (min-width:768px){
+  .camera-launch-btn{width:180px;height:180px}
+  .shutter-btn{width:96px;height:96px}
+  .shutter-inner{width:78px;height:78px}
+  .quick-toggles{bottom:calc(170px + var(--safe-bottom))}
+  .preview-image-container{padding:24px}
+  .download-btn{max-width:480px;margin:0 auto}
+}
+</style>
+</head>
+<body>
+
+<!-- HOME -->
+<section id="home-screen" class="screen active">
+  <div class="home-content">
+    <div class="brand">ULTRA HDR</div>
+    <div class="brand-sub">CAMERA</div>
+    <button id="open-camera-btn" class="camera-launch-btn" aria-label="Open Camera">
+      <svg viewBox="0 0 24 24" width="72" height="72" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+        <circle cx="12" cy="13" r="4"/>
+      </svg>
+    </button>
+    <p class="home-hint">Tap to capture at maximum quality</p>
+    <p class="home-note">Requires HTTPS or localhost. Camera access on HTTP will be blocked by Chrome on mobile.</p>
+  </div>
+</section>
+
+<!-- CAMERA -->
+<section id="camera-screen" class="screen">
+  <div class="viewfinder-container">
+    <div id="viewfinder" class="viewfinder" data-aspect="native">
+      <video id="camera-preview" autoplay playsinline muted></video>
+      <div id="grid-overlay" class="grid-overlay hidden" aria-hidden="true"></div>
+    </div>
+  </div>
+
+  <header class="camera-top-bar">
+    <button id="close-camera-btn" class="icon-btn" aria-label="Close camera">✕</button>
+    <div class="camera-info" id="camera-info">
+      <span id="resolution-indicator">Initialising…</span>
+      <span id="hdr-badge" class="badge hidden">HDR</span>
+      <span id="max-badge" class="badge hidden">MAX</span>
+    </div>
+    <button id="camera-settings-btn" class="icon-btn" aria-label="Camera settings">⚙</button>
+  </header>
+
+  <div id="zoom-bar" class="zoom-bar hidden">
+    <div class="zoom-slider-row">
+      <button id="zoom-out" class="zoom-btn" aria-label="Zoom out">−</button>
+      <input id="zoom-slider" type="range" min="1" max="100" step="1" value="1" aria-label="Zoom" />
+      <button id="zoom-in" class="zoom-btn" aria-label="Zoom in">+</button>
+      <span id="zoom-label" class="zoom-label">1×</span>
+    </div>
+    <div class="zoom-presets" id="zoom-presets">
+      <button class="zoom-preset" data-zoom="1">1×</button>
+      <button class="zoom-preset" data-zoom="2">2×</button>
+      <button class="zoom-preset" data-zoom="5">5×</button>
+      <button class="zoom-preset" data-zoom="10">10×</button>
+      <button class="zoom-preset" data-zoom="30">30×</button>
+      <button class="zoom-preset" data-zoom="100">100×</button>
+    </div>
+  </div>
+
+  <div class="quick-toggles">
+    <button id="flash-btn" class="toggle-btn" aria-label="Toggle flash">
+      <span class="toggle-icon">⚡</span><span class="toggle-label">Flash</span>
+    </button>
+    <button id="timer-btn" class="toggle-btn" aria-label="Timer">
+      <span class="toggle-icon">⏱</span><span class="toggle-label" id="timer-label">Off</span>
+    </button>
+    <button id="grid-btn" class="toggle-btn" aria-label="Toggle grid">
+      <span class="toggle-icon">▦</span><span class="toggle-label">Grid</span>
+    </button>
+    <button id="aspect-btn" class="toggle-btn" aria-label="Toggle 3:4 aspect">
+      <span class="toggle-icon">◫</span><span class="toggle-label">3:4</span>
+    </button>
+    <button id="hdr-btn" class="toggle-btn" aria-label="Toggle Ultra HDR">
+      <span class="toggle-icon">◐</span><span class="toggle-label">Ultra HDR</span>
+    </button>
+    <button id="max-res-btn" class="toggle-btn active" aria-label="Toggle max resolution">
+      <span class="toggle-icon">◉</span><span class="toggle-label">MAX RES</span>
+    </button>
+  </div>
+
+  <div class="bottom-controls">
+    <div class="control-slot left">
+      <button id="gallery-btn" class="gallery-btn" aria-label="Last captured photo">▣<img id="gallery-thumb" alt="" /></button>
+    </div>
+    <div class="control-slot center">
+      <button id="shutter-btn" class="shutter-btn" aria-label="Capture photo"><span class="shutter-inner"></span></button>
+    </div>
+    <div class="control-slot right">
+      <button id="switch-camera-btn" class="icon-btn round" aria-label="Switch camera">⟲</button>
+    </div>
+  </div>
+
+  <div id="countdown-overlay" class="countdown-overlay hidden" aria-live="assertive">
+    <span id="countdown-number"></span>
+  </div>
+
+  <div id="loading-overlay" class="loading-overlay hidden" aria-live="polite">
+    <div class="spinner"></div><span>Capturing…</span>
+  </div>
+</section>
+
+<!-- PREVIEW -->
+<section id="preview-screen" class="screen">
+  <header class="preview-header">
+    <button id="retake-btn" class="text-btn">Retake</button>
+    <h2>Preview</h2>
+    <button id="close-preview-btn" class="text-btn">Close</button>
+  </header>
+  <div class="preview-image-container">
+    <img id="captured-image" alt="Captured photo" />
+  </div>
+  <div class="preview-info" id="preview-info"></div>
+  <div class="preview-actions">
+    <button id="download-btn" class="download-btn">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+        <polyline points="7 10 12 15 17 10"/>
+        <line x1="12" y1="15" x2="12" y2="3"/>
+      </svg>
+      DOWNLOAD ORIGINAL PHOTO
+    </button>
+  </div>
+</section>
+
+<!-- SETTINGS DRAWER -->
+<aside id="settings-drawer" class="settings-drawer hidden" aria-label="Camera settings">
+  <div class="settings-header">
+    <h3>Camera Settings</h3>
+    <button id="close-settings-btn" class="icon-btn" aria-label="Close settings">✕</button>
+  </div>
+  <div class="settings-body">
+    <label class="settings-row"><span>Camera</span><select id="camera-select"></select></label>
+    <label class="settings-row"><span>Aspect Ratio</span>
+      <select id="aspect-select">
+        <option value="native">Native</option>
+        <option value="3:4">3:4</option>
+        <option value="4:3">4:3</option>
+        <option value="16:9">16:9</option>
+        <option value="1:1">1:1</option>
+      </select>
+    </label>
+    <label class="settings-row"><span>Timer</span>
+      <select id="timer-select">
+        <option value="0">Off</option>
+        <option value="3">3 seconds</option>
+        <option value="10">10 seconds</option>
+      </select>
+    </label>
+    <label class="settings-row checkbox-row"><span>Grid lines</span><input type="checkbox" id="grid-checkbox" /></label>
+    <label class="settings-row checkbox-row"><span>MAX RESOLUTION</span><input type="checkbox" id="max-res-checkbox" checked /></label>
+    <label class="settings-row checkbox-row"><span>ULTRA HDR</span><input type="checkbox" id="hdr-checkbox" /></label>
+    <div class="settings-note" id="hdr-note"></div>
+    <div class="settings-note" id="zoom-note"></div>
+  </div>
+</aside>
+
+<div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+
+<script>
+(() => {
+'use strict';
+
+const $ = (sel) => document.querySelector(sel);
+
+const el = {
+  homeScreen: $('#home-screen'),
+  cameraScreen: $('#camera-screen'),
+  previewScreen: $('#preview-screen'),
+
+  openCameraBtn: $('#open-camera-btn'),
+  closeCameraBtn: $('#close-camera-btn'),
+  closePreviewBtn: $('#close-preview-btn'),
+  retakeBtn: $('#retake-btn'),
+
+  viewfinder: $('#viewfinder'),
+  video: $('#camera-preview'),
+  gridOverlay: $('#grid-overlay'),
+
+  resolutionIndicator: $('#resolution-indicator'),
+  hdrBadge: $('#hdr-badge'),
+  maxBadge: $('#max-badge'),
+
+  flashBtn: $('#flash-btn'),
+  timerBtn: $('#timer-btn'),
+  timerLabel: $('#timer-label'),
+  gridBtn: $('#grid-btn'),
+  aspectBtn: $('#aspect-btn'),
+  hdrBtn: $('#hdr-btn'),
+  maxResBtn: $('#max-res-btn'),
+
+  zoomBar: $('#zoom-bar'),
+  zoomSlider: $('#zoom-slider'),
+  zoomOut: $('#zoom-out'),
+  zoomIn: $('#zoom-in'),
+  zoomLabel: $('#zoom-label'),
+  zoomPresets: $('#zoom-presets'),
+
+  shutterBtn: $('#shutter-btn'),
+  switchCameraBtn: $('#switch-camera-btn'),
+  galleryBtn: $('#gallery-btn'),
+  galleryThumb: $('#gallery-thumb'),
+
+  cameraSettingsBtn: $('#camera-settings-btn'),
+  settingsDrawer: $('#settings-drawer'),
+  closeSettingsBtn: $('#close-settings-btn'),
+  cameraSelect: $('#camera-select'),
+  aspectSelect: $('#aspect-select'),
+  timerSelect: $('#timer-select'),
+  gridCheckbox: $('#grid-checkbox'),
+  maxResCheckbox: $('#max-res-checkbox'),
+  hdrCheckbox: $('#hdr-checkbox'),
+  hdrNote: $('#hdr-note'),
+  zoomNote: $('#zoom-note'),
+
+  countdownOverlay: $('#countdown-overlay'),
+  countdownNumber: $('#countdown-number'),
+  loadingOverlay: $('#loading-overlay'),
+
+  capturedImage: $('#captured-image'),
+  previewInfo: $('#preview-info'),
+  downloadBtn: $('#download-btn'),
+
+  toast: $('#toast'),
+};
+
+const state = {
+  stream: null,
+  track: null,
+  imageCapture: null,
+  capabilities: {},
+  settings: {},
+  videoDevices: [],
+  currentDeviceIndex: 0,
+  facingMode: 'environment',
+  maxResolution: true,
+  hdrEnabled: false,
+  gridVisible: false,
+  flashOn: false,
+  timerSeconds: 0,
+  zoomValue: 1,
+  aspectRatio: 'native',
+  capturedBlob: null,
+  capturedObjectUrl: null,
+  galleryObjectUrl: null,
+  isCapturing: false,
+  toastTimer: null,
+};
+
+const delay = (ms) => new Promise((r) => setTimeout(r, ms));
+
+const ASPECT_MAP = {
+  'native': null,
+  '3:4': [3, 4],
+  '4:3': [4, 3],
+  '16:9': [16, 9],
+  '1:1': [1, 1],
+};
+
+function showScreen(name) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  if (name === 'home') el.homeScreen.classList.add('active');
+  else if (name === 'camera') el.cameraScreen.classList.add('active');
+  else if (name === 'preview') el.previewScreen.classList.add('active');
+}
+
+function showToast(msg, dur = 3800) {
+  clearTimeout(state.toastTimer);
+  el.toast.textContent = msg;
+  el.toast.classList.remove('hidden');
+  requestAnimationFrame(() => el.toast.classList.add('visible'));
+  state.toastTimer = setTimeout(() => {
+    el.toast.classList.remove('visible');
+    setTimeout(() => el.toast.classList.add('hidden'), 300);
+  }, dur);
+}
+
+const showLoading = (v) => el.loadingOverlay.classList.toggle('hidden', !v);
+
+function formatDate(d) {
+  const p = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}_${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+}
+
+function extFromMime(m) {
+  return ({'image/jpeg':'jpg','image/png':'png','image/webp':'webp','image/avif':'avif','image/heic':'heic','image/heif':'heif'}[m]) || 'jpg';
+}
+
+function megapixels(w, h) { return (w * h) / 1e6; }
+
+function formatBytes(b) {
+  if (b < 1024) return b + ' B';
+  if (b < 1048576) return (b/1024).toFixed(1) + ' KB';
+  return (b/1048576).toFixed(2) + ' MB';
+}
+
+/* ============ CAMERA ============ */
+async function openCamera() {
+  if (!navigator.mediaDevices?.getUserMedia) {
+    showToast('Camera API is not supported. Use Chrome or Safari on a modern device.');
+    return;
+  }
+  if (!window.isSecureContext) {
+    showToast('Camera requires HTTPS. Open this app over https:// or localhost.', 7000);
+  }
+  showScreen('camera');
+  await startStream();
+}
+
+function stopStream() {
+  if (state.stream) state.stream.getTracks().forEach(t => t.stop());
+  state.stream = null;
+  state.track = null;
+  state.imageCapture = null;
+  el.video.srcObject = null;
+}
+
+async function startStream(deviceId = null) {
+  stopStream();
+
+  const videoConstraints = {
+    facingMode: deviceId ? undefined : { ideal: state.facingMode },
+    deviceId: deviceId ? { exact: deviceId } : undefined,
+    width: { ideal: 4096 },
+    height: { ideal: 2160 },
+  };
+
+  try {
+    const stream = await navigator.mediaDevices.getUserMedia({ video: videoConstraints, audio: false });
+    state.stream = stream;
+    el.video.srcObject = stream;
+    state.track = stream.getVideoTracks()[0];
+    state.capabilities = state.track.getCapabilities?.() ?? {};
+    state.settings = state.track.getSettings?.() ?? {};
+
+    if (state.maxResolution) await applyMaxResolution();
+    else await applyBaseResolution();
+
+    setupImageCapture();
+    await enumerateVideoDevices();
+
+    // Reset zoom on new camera, keep value
+    await applyHardwareZoom();
+    updateDigitalZoom();
+
+    updateResolutionIndicator();
+    updateControlAvailability();
+    updateHDRNote();
+    updateZoomNote();
+
+    // Show zoom bar if zoom is applicable (always, since digital zoom is available)
+    el.zoomBar.classList.remove('hidden');
+  } catch (err) {
+    handleCameraError(err);
+  }
+}
+
+async function applyMaxResolution() {
+  if (!state.track) return;
+  const caps = state.capabilities;
+  const c = {};
+  if (caps.width?.max) c.width = { ideal: caps.width.max };
+  if (caps.height?.max) c.height = { ideal: caps.height.max };
+  if (!c.width && !c.height) { c.width = { ideal: 4096 }; c.height = { ideal: 2160 }; }
+  try { await state.track.applyConstraints(c); } catch(e) { /* ignore */ }
+  state.settings = state.track.getSettings?.() ?? state.settings;
+  updateResolutionIndicator();
+}
+
+async function applyBaseResolution() {
+  if (!state.track) return;
+  try { await state.track.applyConstraints({ width: { ideal: 1920 }, height: { ideal: 1080 } }); } catch(e) {}
+  state.settings = state.track.getSettings?.() ?? state.settings;
+  updateResolutionIndicator();
+}
+
+function setupImageCapture() {
+  if (typeof ImageCapture === 'undefined') { state.imageCapture = null; return; }
+  try { state.imageCapture = new ImageCapture(state.track); }
+  catch (e) { state.imageCapture = null; }
+}
+
+function isHDRSupported() {
+  const c = state.capabilities || {};
+  return Boolean(c.hdr === true || c.dynamicRange || c.supportedDynamicRange || c.photoCapabilities?.hdr === true);
+}
+
+/* ============ ZOOM ============ */
+function getHardwareZoomMax() {
+  return state.capabilities.zoom?.max ?? 1;
+}
+
+function getDigitalZoomFactor() {
+  const hwMax = getHardwareZoomMax();
+  return state.zoomValue > hwMax ? state.zoomValue / hwMax : 1;
+}
+
+async function applyHardwareZoom() {
+  if (!state.track) return;
+  const caps = state.capabilities;
+  if (!caps.zoom) return;
+  const hwMax = caps.zoom.max ?? 1;
+  const hwMin = caps.zoom.min ?? 1;
+  const desired = Math.min(hwMax, Math.max(hwMin, state.zoomValue));
+  try { await state.track.applyConstraints({ zoom: desired }); } catch(e) { /* ignore */ }
+}
+
+function updateDigitalZoom() {
+  const digital = getDigitalZoomFactor();
+  el.video.style.transform = digital > 1 ? `scale(${digital})` : '';
+  updateZoomLabel();
+}
+
+function updateZoomLabel() {
+  const total = state.zoomValue;
+  const hwMax = getHardwareZoomMax();
+  const digital = getDigitalZoomFactor();
+
+  let label;
+  if (hwMax <= 1.01) {
+    label = total <= 1.01 ? '1×' : `${Math.round(total)}× dig`;
+  } else if (total <= hwMax + 0.01) {
+    label = `${total.toFixed(1)}×`;
+  } else {
+    label = `${Math.round(total)}× (${hwMax.toFixed(1)}+${digital.toFixed(1)}d)`;
+  }
+  el.zoomLabel.textContent = label;
+
+  // Highlight active preset
+  document.querySelectorAll('.zoom-preset').forEach(b => {
+    b.classList.toggle('active', Number(b.dataset.zoom) === Math.round(total));
+  });
+
+  // Warning at high digital zoom
+  if (digital > 5) {
+    el.zoomLabel.style.color = 'var(--danger)';
+  } else {
+    el.zoomLabel.style.color = 'var(--gold)';
+  }
+}
+
+function setZoom(value, apply = true) {
+  const v = Math.max(1, Math.min(100, Number(value)));
+  state.zoomValue = v;
+  el.zoomSlider.value = v;
+  updateZoomLabel();
+  if (apply) {
+    applyHardwareZoom();
+    updateDigitalZoom();
+  }
+}
+
+function updateZoomNote() {
+  const hwMax = getHardwareZoomMax();
+  if (hwMax > 1.01) {
+    el.zoomNote.textContent = `Zoom: hardware up to ${hwMax.toFixed(1)}× from camera sensor. Beyond that, digital crop is applied (quality drops with higher zoom).`;
+  } else {
+    el.zoomNote.textContent = 'Zoom: this browser/camera does not expose hardware zoom. All zoom is digital (CSS + crop). Quality drops significantly at high values.';
+  }
+}
+
+/* ============ ASPECT ============ */
+function setAspectRatio(value) {
+  if (!(value in ASPECT_MAP)) value = 'native';
+  state.aspectRatio = value;
+  el.viewfinder.dataset.aspect = value;
+  el.aspectSelect.value = value;
+
+  // Aspect button active state
+  el.aspectBtn.classList.toggle('active', value === '3:4');
+  el.aspectBtn.querySelector('.toggle-label').textContent =
+    value === 'native' ? '3:4' : value;
+
+  // Grid must remain inside the viewfinder (already is)
+}
+
+/* ============ UI ============ */
+function updateResolutionIndicator() {
+  const w = state.settings.width, h = state.settings.height;
+  if (w && h) {
+    el.resolutionIndicator.textContent = `${w} × ${h}  •  ${megapixels(w,h).toFixed(1)} MP`;
+  } else {
+    el.resolutionIndicator.textContent = 'Resolution unknown';
+  }
+  el.maxBadge.classList.toggle('hidden', !state.maxResolution);
+  el.hdrBadge.classList.toggle('hidden', !state.hdrEnabled);
+}
+
+function updateControlAvailability() {
+  const torch = Boolean(state.capabilities.torch);
+  el.flashBtn.disabled = !torch;
+  if (!torch) state.flashOn = false;
+
+  const hdr = isHDRSupported();
+  el.hdrBtn.disabled = !hdr;
+  el.hdrCheckbox.disabled = !hdr;
+  if (!hdr) { state.hdrEnabled = false; el.hdrCheckbox.checked = false; }
+
+  el.gridOverlay.classList.toggle('hidden', !state.gridVisible);
+  el.gridBtn.classList.toggle('active', state.gridVisible);
+  el.gridCheckbox.checked = state.gridVisible;
+
+  el.timerLabel.textContent = state.timerSeconds === 0 ? 'Off' : `${state.timerSeconds}s`;
+  el.timerBtn.classList.toggle('active', state.timerSeconds > 0);
+  el.timerSelect.value = String(state.timerSeconds);
+
+  el.maxResBtn.classList.toggle('active', state.maxResolution);
+  el.maxResCheckbox.checked = state.maxResolution;
+
+  el.hdrBtn.classList.toggle('active', state.hdrEnabled);
+  el.hdrCheckbox.checked = state.hdrEnabled;
+
+  el.flashBtn.classList.toggle('active', state.flashOn);
+}
+
+function updateHDRNote() {
+  el.hdrNote.textContent = isHDRSupported()
+    ? 'HDR hardware capability detected. The browser will attempt to preserve dynamic range where the capture API allows it.'
+    : 'Hardware HDR is not available through this browser. Using the best supported camera mode. No fake HDR processing is applied.';
+}
+
+/* ============ DEVICES ============ */
+async function enumerateVideoDevices() {
+  try {
+    const devices = await navigator.mediaDevices.enumerateDevices();
+    state.videoDevices = devices.filter(d => d.kind === 'videoinput');
+    el.cameraSelect.innerHTML = '';
+    state.videoDevices.forEach((d, i) => {
+      const opt = document.createElement('option');
+      opt.value = d.deviceId;
+      opt.textContent = d.label || `Camera ${i + 1}`;
+      el.cameraSelect.appendChild(opt);
+    });
+    if (state.track) {
+      const s = state.track.getSettings();
+      if (s.deviceId) el.cameraSelect.value = s.deviceId;
+    }
+  } catch (e) { /* ignore */ }
+}
+
+async function switchCamera() {
+  if (state.videoDevices.length < 2) {
+    showToast('No other cameras available.');
+    return;
+  }
+  state.currentDeviceIndex = (state.currentDeviceIndex + 1) % state.videoDevices.length;
+  await startStream(state.videoDevices[state.currentDeviceIndex].deviceId);
+}
+
+/* ============ FLASH / HDR / TIMER ============ */
+async function toggleFlash() {
+  if (!state.track || !state.capabilities.torch) {
+    showToast('Flash / torch is not supported by this camera.');
+    return;
+  }
+  state.flashOn = !state.flashOn;
+  try {
+    await state.track.applyConstraints({ torch: state.flashOn });
+    updateControlAvailability();
+  } catch (e) {
+    showToast('Unable to toggle flash.');
+    state.flashOn = false;
+  }
+}
+
+async function toggleHDR() {
+  if (!isHDRSupported()) {
+    showToast('Hardware HDR is not available through this browser.');
+    return;
+  }
+  state.hdrEnabled = !state.hdrEnabled;
+  try {
+    await state.track.applyConstraints(
+      state.hdrEnabled ? { advanced: [{ hdr: true }] } : { advanced: [{ hdr: false }] }
+    );
+  } catch (e) {
+    try {
+      await state.track.applyConstraints(
+        state.hdrEnabled ? { advanced: [{ dynamicRange: 'HDR' }] } : { advanced: [{ dynamicRange: 'SDR' }] }
+      );
+    } catch (_) {
+      showToast('This camera does not expose an HDR constraint.');
+      state.hdrEnabled = false;
+    }
+  }
+  updateControlAvailability();
+  updateResolutionIndicator();
+}
+
+function setTimer(sec) {
+  state.timerSeconds = sec;
+  el.timerLabel.textContent = sec === 0 ? 'Off' : `${sec}s`;
+  el.timerBtn.classList.toggle('active', sec > 0);
+  el.timerSelect.value = String(sec);
+}
+
+async function runCountdown(sec) {
+  el.countdownOverlay.classList.remove('hidden');
+  for (let i = sec; i > 0; i--) {
+    el.countdownNumber.textContent = i;
+    await delay(1000);
+  }
+  el.countdownOverlay.classList.add('hidden');
+}
+
+/* ============ CAPTURE ============ */
+async function capturePhoto() {
+  if (state.isCapturing) return;
+  if (state.timerSeconds > 0) await runCountdown(state.timerSeconds);
+
+  state.isCapturing = true;
+  showLoading(true);
+
+  try {
+    let rawBlob, width, height, format;
+
+    if (state.imageCapture && typeof state.imageCapture.takePhoto === 'function') {
+      const photoSettings = {};
+      const caps = state.capabilities;
+      if (caps.width?.max) photoSettings.imageWidth = caps.width.max;
+      if (caps.height?.max) photoSettings.imageHeight = caps.height.max;
+      if (state.flashOn && caps.torch) photoSettings.fillLightMode = 'flash';
+
+      rawBlob = await state.imageCapture.takePhoto(photoSettings);
+      format = rawBlob.type || 'image/jpeg';
+
+      const bmp = await createImageBitmap(rawBlob);
+      width = bmp.width;
+      height = bmp.height;
+      bmp.close();
+
+      if (state.maxResolution && caps.width?.max && width < caps.width.max * 0.8) {
+        showToast(
+          `Captured at ${width}×${height}. The browser did not expose the full ${caps.width.max}×${caps.height.max} sensor resolution. Use the native camera app for maximum detail.`,
+          6000
+        );
+      }
+    } else {
+      const video = el.video;
+      const canvas = document.createElement('canvas');
+      canvas.width = video.videoWidth;
+      canvas.height = video.videoHeight;
+      const ctx = canvas.getContext('2d');
+      ctx.drawImage(video, 0, 0);
+      rawBlob = await new Promise(res => canvas.toBlob(res, 'image/jpeg', 1.0));
+      if (!rawBlob) throw new Error('Canvas capture failed.');
+      width = canvas.width;
+      height = canvas.height;
+      format = 'image/jpeg';
+      showToast(
+        `Image Capture API unavailable — captured video frame at ${width}×${height}. May be lower than full sensor resolution.`,
+        6000
+      );
+    }
+
+    // Apply aspect ratio crop and digital zoom crop if needed
+    const digital = getDigitalZoomFactor();
+    const aspect = ASPECT_MAP[state.aspectRatio];
+    const needsCrop = (aspect !== null) || (digital > 1.01);
+
+    let finalBlob = rawBlob;
+    let cropped = false;
+    let finalW = width, finalH = height;
+
+    if (needsCrop) {
+      const result = await processCapturedBlob(rawBlob, aspect, digital);
+      finalBlob = result.blob;
+      finalW = result.width;
+      finalH = result.height;
+      cropped = true;
+    }
+
+    state.capturedBlob = finalBlob;
+
+    if (state.capturedObjectUrl) URL.revokeObjectURL(state.capturedObjectUrl);
+    state.capturedObjectUrl = URL.createObjectURL(finalBlob);
+
+    showPreview(state.capturedObjectUrl, finalW, finalH, finalBlob.type, finalBlob.size, {
+      rawW: width, rawH: height,
+      cropped, aspect: state.aspectRatio, digitalZoom: digital,
+    });
+
+  } catch (err) {
+    console.error(err);
+    showToast(`Capture failed: ${err.message}`);
+  } finally {
+    state.isCapturing = false;
+    showLoading(false);
+  }
+}
+
+async function processCapturedBlob(blob, aspect, digitalZoom) {
+  const bmp = await createImageBitmap(blob);
+  const srcW = bmp.width, srcH = bmp.height;
+
+  let cropW = srcW, cropH = srcH;
+
+  if (aspect) {
+    const [aw, ah] = aspect;
+    const targetAR = aw / ah;
+    const srcAR = srcW / srcH;
+    if (srcAR > targetAR) cropW = srcH * targetAR;
+    else cropH = srcW / targetAR;
+  }
+
+  if (digitalZoom > 1) {
+    cropW /= digitalZoom;
+    cropH /= digitalZoom;
+  }
+
+  const cropX = (srcW - cropW) / 2;
+  const cropY = (srcH - cropH) / 2;
+
+  const canvas = document.createElement('canvas');
+  canvas.width = Math.max(1, Math.round(cropW));
+  canvas.height = Math.max(1, Math.round(cropH));
+  const ctx = canvas.getContext('2d');
+  ctx.imageSmoothingQuality = 'high';
+  ctx.drawImage(bmp, cropX, cropY, cropW, cropH, 0, 0, canvas.width, canvas.height);
+  bmp.close();
+
+  const processed = await new Promise(res => canvas.toBlob(res, blob.type || 'image/jpeg', 1.0));
+  return { blob: processed, width: canvas.width, height: canvas.height };
+}
+
+/* ============ PREVIEW ============ */
+function showPreview(url, width, height, format, size, meta = {}) {
+  el.capturedImage.src = url;
+
+  const mp = megapixels(width, height);
+  const fmt = (format.split('/')[1] || format).toUpperCase();
+
+  const parts = [
+    `<div><strong>Dimensions:</strong> ${width} × ${height}</div>`,
+    `<div><strong>Megapixels:</strong> ${mp.toFixed(1)} MP</div>`,
+    `<div><strong>File size:</strong> ${formatBytes(size)}</div>`,
+    `<div><strong>Format:</strong> ${fmt}</div>`,
+  ];
+
+  if (meta.cropped) {
+    const extras = [];
+    if (meta.aspect && meta.aspect !== 'native') extras.push(`aspect ${meta.aspect}`);
+    if (meta.digitalZoom > 1.01) extras.push(`${meta.digitalZoom.toFixed(1)}× digital zoom`);
+    parts.push(`<div class="warn"><strong>Cropped:</strong> ${extras.join(' + ')} (from ${meta.rawW}×${meta.rawH})</div>`);
+  }
+  if (meta.digitalZoom > 5) {
+    parts.push(`<div class="warn"><strong>Note:</strong> heavy digital zoom reduces quality</div>`);
+  }
+
+  el.previewInfo.innerHTML = parts.join('');
+
+  updateGalleryThumb(url);
+  showScreen('preview');
+}
+
+function updateGalleryThumb(url) {
+  if (state.galleryObjectUrl && state.galleryObjectUrl !== url) URL.revokeObjectURL(state.galleryObjectUrl);
+  state.galleryObjectUrl = url;
+  el.galleryThumb.src = url;
+}
+
+/* ============ DOWNLOAD ============ */
+function downloadOriginal() {
+  if (!state.capturedBlob) { showToast('No photo to download.'); return; }
+  const ext = extFromMime(state.capturedBlob.type);
+  const filename = `UltraHDR_${formatDate(new Date())}.${ext}`;
+  const url = URL.createObjectURL(state.capturedBlob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  a.style.display = 'none';
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 15000);
+  showToast(`Downloading ${ext.toUpperCase()} (${formatBytes(state.capturedBlob.size)})…`);
+}
+
+/* ============ ERRORS ============ */
+function handleCameraError(err) {
+  let msg = 'Unable to access the camera.';
+  switch (err.name) {
+    case 'NotAllowedError':
+    case 'PermissionDeniedError':
+      msg = 'Camera permission denied. Allow camera access in your browser settings and try again.'; break;
+    case 'NotFoundError':
+    case 'DevicesNotFoundError':
+      msg = 'No camera found on this device.'; break;
+    case 'NotReadableError':
+    case 'TrackStartError':
+      msg = 'Camera is in use by another app. Close other apps and try again.'; break;
+    case 'OverconstrainedError':
+      msg = 'Requested resolution is not supported. Try disabling MAX RESOLUTION.'; break;
+    case 'SecurityError':
+      msg = 'Camera access requires a secure context (HTTPS or localhost).'; break;
+    default:
+      msg = `Camera error: ${err.message || err.name}`;
+  }
+  showToast(msg, 6000);
+  showScreen('home');
+}
+
+/* ============ EVENTS ============ */
+function bindEvents() {
+  el.openCameraBtn.addEventListener('click', openCamera);
+
+  el.closeCameraBtn.addEventListener('click', () => { stopStream(); showScreen('home'); });
+
+  el.shutterBtn.addEventListener('click', capturePhoto);
+  el.switchCameraBtn.addEventListener('click', switchCamera);
+
+  el.flashBtn.addEventListener('click', toggleFlash);
+
+  el.timerBtn.addEventListener('click', () => {
+    const order = [0, 3, 10];
+    const next = order[(order.indexOf(state.timerSeconds) + 1) % order.length];
+    setTimer(next);
+  });
+
+  el.gridBtn.addEventListener('click', () => {
+    state.gridVisible = !state.gridVisible;
+    updateControlAvailability();
+  });
+
+  el.aspectBtn.addEventListener('click', () => {
+    // Toggle between Native and 3:4
+    setAspectRatio(state.aspectRatio === '3:4' ? 'native' : '3:4');
+  });
+
+  el.hdrBtn.addEventListener('click', toggleHDR);
+
+  el.maxResBtn.addEventListener('click', async () => {
+    state.maxResolution = !state.maxResolution;
+    if (state.maxResolution) await applyMaxResolution();
+    else await applyBaseResolution();
+    // Reapply zoom after resolution change
+    await applyHardwareZoom();
+    updateDigitalZoom();
+    updateControlAvailability();
+    updateResolutionIndicator();
+  });
+
+  // Zoom
+  el.zoomSlider.addEventListener('input', (e) => setZoom(e.target.value));
+  el.zoomOut.addEventListener('click', () => setZoom(state.zoomValue - 1));
+  el.zoomIn.addEventListener('click', () => setZoom(state.zoomValue + 1));
+  el.zoomPresets.addEventListener('click', (e) => {
+    const btn = e.target.closest('.zoom-preset');
+    if (!btn) return;
+    setZoom(btn.dataset.zoom);
+  });
+
+  // Preview
+  el.retakeBtn.addEventListener('click', () => showScreen('camera'));
+  el.closePreviewBtn.addEventListener('click', () => showScreen('camera'));
+  el.downloadBtn.addEventListener('click', downloadOriginal);
+
+  // Gallery
+  el.galleryBtn.addEventListener('click', () => {
+    if (state.capturedBlob && state.capturedObjectUrl) {
+      const img = new Image();
+      img.onload = () => showPreview(
+        state.capturedObjectUrl,
+        img.naturalWidth, img.naturalHeight,
+        state.capturedBlob.type, state.capturedBlob.size
+      );
+      img.src = state.capturedObjectUrl;
+    } else {
+      showToast('No photos captured yet.');
+    }
+  });
+
+  // Settings
+  el.cameraSettingsBtn.addEventListener('click', () => {
+    el.settingsDrawer.classList.remove('hidden');
+    updateHDRNote();
+    updateZoomNote();
+  });
+  el.closeSettingsBtn.addEventListener('click', () => el.settingsDrawer.classList.add('hidden'));
+
+  el.cameraSelect.addEventListener('change', (e) => startStream(e.target.value));
+
+  el.aspectSelect.addEventListener('change', (e) => setAspectRatio(e.target.value));
+
+  el.timerSelect.addEventListener('change', (e) => setTimer(Number(e.target.value)));
+
+  el.gridCheckbox.addEventListener('change', (e) => {
+    state.gridVisible = e.target.checked;
+    updateControlAvailability();
+  });
+
+  el.maxResCheckbox.addEventListener('change', async (e) => {
+    state.maxResolution = e.target.checked;
+    if (state.maxResolution) await applyMaxResolution();
+    else await applyBaseResolution();
+    await applyHardwareZoom();
+    updateDigitalZoom();
+    updateControlAvailability();
+    updateResolutionIndicator();
+  });
+
+  el.hdrCheckbox.addEventListener('change', () => toggleHDR());
+
+  // Keyboard
+  document.addEventListener('keydown', (e) => {
+    if (!el.cameraScreen.classList.contains('active')) return;
+    if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); capturePhoto(); }
+    else if (e.key === 'Escape') el.closeCameraBtn.click();
+  });
+}
+
+/* ============ INIT ============ */
+function init() {
+  bindEvents();
+  setAspectRatio('native');
+  setZoom(1, false);
+  updateControlAvailability();
+
+  document.addEventListener('touchmove', (e) => {
+    if (el.cameraScreen.classList.contains('active') && !el.settingsDrawer.contains(e.target)) {
+      e.preventDefault();
+    }
+  }, { passive: false });
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+})();
+</script>
+</body>
+</html>
